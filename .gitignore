@@ -1,0 +1,20 @@
+# Binaires des providers Terraform
+**/.terraform/*
+
+# Fichiers d'état contenant les secrets et métadonnées du cluster
+*.tfstate
+*.tfstate.*
+
+# Fichiers de variables locales
+*.tfvars
+*.tfvars.json
+
+# Logs de crash et fichiers temporaires
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc

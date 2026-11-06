@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: taskmaster
+spec:
+  # 1. Combien de copies (Pods) de ton application veux-tu faire tourner en parallèle ? (Mets 3 !)
+  replicas: 3
+  selector:
+    matchLabels:
+      app: taskmaster-web
+  template:
+    metadata:
+      labels:
+        app: taskmaster-web
+    spec:
+      containers:
+        - name: web
+          # 2. Ton image officielle sur Docker Hub (ex: tonpseudo/taskmaster:latest)
+          image: robaii/taskmaster:latest
+          ports:
+            # 3. Le port sur lequel Gunicorn écoute dans ton Dockerfile
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: db-credentials
+          # Les sondes de santé Kubernetes sur ta route /health !
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+  namespace: taskmaster
+spec:
+  type: LoadBalancer
+  selector:
+    # 4. Quelle étiquette (label) ce Service doit-il cibler pour envoyer le trafic aux 3 Pods web ?
+    app: taskmaster-web
+  ports:
+    - protocol: TCP
+      port: 8080        # Port accessible sur ton PC (http://localhost:8080)
+      targetPort: 5000   # 5. Port interne du conteneur Gunicorn
