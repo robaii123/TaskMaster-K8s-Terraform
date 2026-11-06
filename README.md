@@ -7,7 +7,7 @@
 
 Dépôt d'infrastructure (**Infra Repo**) dédié au déploiement haute disponibilité de l'application **TaskMaster** sur un cluster **Kubernetes**, provisionné de manière déclarative via ** manifestes YAML natifs (`k8s/`)** et automatisé en **Infrastructure as Code avec Terraform (`terraform/`)**.
 
-> 🔗 **Dépôt de l'application & Pipeline CI/CD DevSecOps :** [DevOps-Project-TaskMaster](https://github.com/TON_PSEUDO_GITHUB/DevOps-Project-TaskMaster)
+> 🔗 **Dépôt de l'application & Pipeline CI/CD DevSecOps :** [DevOps-Project-TaskMaster](https://github.com/robaii123/DevOps-Project-TaskMaster)
 
 ---
 
